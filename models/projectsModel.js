@@ -28,7 +28,7 @@ async function findById(id) {
     .first()
 
     const actions = await findActions(id)
-    return (project, actions)
+    return (project, [actions])
 }
 
 function add(project) {
