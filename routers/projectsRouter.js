@@ -23,4 +23,17 @@ router.get('/', async (req, res) => {
      }
  })
 
+
+router.get('/:id/actions', async (req,res)=> {
+    try {
+        const id = req.params.id;
+        console.log(id);
+        const projectWithActions = await Projects.getProjectPlusActions(id);
+        res.status(200).json(projectActions)
+    } catch(error) {
+        res.status(500).json(error)
+    }
+})
+
+
  module.exports = router;

@@ -12,4 +12,17 @@ router.get('/', async (req, res) => {
     }
  })
 
+
+ router.post('/', async (req, res) => {
+    try {
+        const newProject = await Actions.add(req.body);
+        console.log(newAction);
+        res.status(200).json("action added")
+    } catch(error) {
+        res.status(500).json(error)
+    }
+})
+
+
+
 module.exports = router

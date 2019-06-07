@@ -7,6 +7,7 @@ module.exports = {
     find,
     findById,
     add,
+    getProjectPlusActions
     // update,
     // remove,
 };
@@ -26,6 +27,22 @@ function add(project) {
     .insert(project)
 
 }
+
+function getProjectPlusActions(id) {
+    return db('actions')
+    .where({ 'actions.project_id': id })
+    .first()
+    .join('projects', 'project_id', 'actions.project_id')
+    .select(
+        'projects.id',
+        'projects.name',
+        'projects.description',
+        'projects.isCompleted'
+    )
+};
+
+
+
 
 // function update(id, changes) {
 //     return db('projects')
