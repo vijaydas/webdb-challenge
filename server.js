@@ -20,6 +20,9 @@ server.get("/", (req, res) => {
     res.sendStatus(200)
 } )
 
+server.use('/api/projects', require("./routers/projectsRouter"))
+server.use('/api/actions', require("./routers/actionsRouter"))
+
 server.listen(port, () => {
     console.log(`Server listening on ${port}`);
 });
