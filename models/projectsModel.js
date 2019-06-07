@@ -16,11 +16,20 @@ function find() {
     return db('projects');
 }
 
-function findById(id) {
-    return db('projects')
-      .where({ id })
-      .first();
-  }
+function findActions(id) {
+    return db('actions')
+    .where({'actions.project_id': id})
+}
+
+async function findById(id) {
+
+    const project = await db('projects')
+    .where({id})
+    .first()
+
+    const actions = await findActions(id)
+    return (project, actions)
+}
 
 function add(project) {
     return db('projects')
@@ -31,14 +40,14 @@ function add(project) {
 function getProjectPlusActions(id) {
     return db('actions')
     .where({ 'actions.project_id': id })
-    .first()
-    .join('projects', 'project_id', 'actions.project_id')
+       .join('projects', 'project_id', 'actions.project_id')
     .select(
         'projects.id',
         'projects.name',
         'projects.description',
         'projects.isCompleted'
     )
+    .first()
 };
 
 

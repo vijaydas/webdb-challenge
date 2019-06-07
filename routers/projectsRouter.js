@@ -24,12 +24,28 @@ router.get('/', async (req, res) => {
  })
 
 
-router.get('/:id/actions', async (req,res)=> {
+ router.get('/:id', (req,res) => {
+    Projects.findById(req.params.id)
+    .then(project => {
+        if(project) {
+            res.status(200).json(project);
+        }
+        else {
+            res.status(404).json({message: 'no id found'});
+        }
+    })
+    .catch(error => {
+        res.status(500).json(error);
+    })
+})
+
+
+router.get('/:id/actions', async (req,res) => {
     try {
         const id = req.params.id;
         console.log(id);
         const projectWithActions = await Projects.getProjectPlusActions(id);
-        res.status(200).json(projectActions)
+        res.status(200).json(projectWithActions)
     } catch(error) {
         res.status(500).json(error)
     }
